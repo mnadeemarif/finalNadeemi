@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "646406637954",
+    "firebase_url": "https://finalapp-a285b.firebaseio.com",
+    "project_id": "finalapp-a285b",
+    "storage_bucket": "finalapp-a285b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:646406637954:android:9b46c154e3d1854c2fa79b",
+        "android_client_info": {
+          "package_name": "com.csgradqau.finalexamsectionb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "646406637954-2bk879ouddgkgp0o5q4999ipqe6b25bm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-sQoU996Bp1nYbhme24oqodlBC8pM8t0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "646406637954-2bk879ouddgkgp0o5q4999ipqe6b25bm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
