@@ -139,7 +139,7 @@ public class registerActivity extends AppCompatActivity {
                 //long id = db.registerUser(a.getEmail(),a.getPassword(),a.getName(),a.getDob(),a.getGender(),a.getHobbies(),a.getProfile());
                 if (!u_id.equals(""))
                 {
-                    //Toast.makeText(getActivity(), "User Registered !", Toast.LENGTH_LONG).show();
+                    Toast.makeText(registerActivity.this, "User Registered !", Toast.LENGTH_LONG).show();
                 }
             }
         });
