@@ -53,8 +53,15 @@ public class loginActivity extends AppCompatActivity {
                                 //Toast.makeText(getActivity(), "help : "+f_pass, Toast.LENGTH_LONG).show();
                                 if (f_pass.equals(password.getEditText().getText().toString().trim())) {
                                     Toast.makeText(loginActivity.this, "Logged In!!!", Toast.LENGTH_LONG).show();
-                                    Intent i = new Intent(loginActivity.this, employeeActivity.class);
-                                    startActivity(i);
+                                    if(dt.child("type").getValue().toString().equals("employee"))
+                                    {
+                                        Intent i = new Intent(loginActivity.this, employeeActivity.class);
+                                        startActivity(i);
+                                    }
+                                     else{
+                                        Intent i = new Intent(loginActivity.this, adminActivity.class);
+                                        startActivity(i);
+                                    }
                                 }
                                 else {
                                     Toast.makeText(loginActivity.this, "Wrong Password !!!", Toast.LENGTH_LONG).show();

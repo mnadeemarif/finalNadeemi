@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FinalExamSectionB</string>
+    <string name="msg_subcribed">Successfully Subscribed !</string>
+    <string name="msg_subcribed_failed">Could not subscribe !</string>
 </resources>

@@ -132,6 +132,7 @@ public class employeeActivity extends AppCompatActivity {
                     //Toast.makeText(getActivity(), "user : " +u.getEmail(), Toast.LENGTH_LONG).show();
                 }
                 adapter.notifyDataSetChanged();
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -149,6 +150,10 @@ public class employeeActivity extends AppCompatActivity {
         });
 
     }
+
+
+
+
 
     private void showProductDialog(final boolean shouldUpdate, final product t, final int position) {
         LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getApplicationContext());

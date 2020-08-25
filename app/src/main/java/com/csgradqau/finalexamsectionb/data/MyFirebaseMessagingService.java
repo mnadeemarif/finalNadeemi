@@ -18,6 +18,8 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.csgradqau.finalexamsectionb.Config;
+import com.csgradqau.finalexamsectionb.R;
+import com.csgradqau.finalexamsectionb.adminActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -67,38 +69,38 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage == null)
             return;
 
-        // Check if message contains a notification payload.
-//        if (remoteMessage.getNotification() != null) {
-//            Log.e(TAG, "Notification Body: " + remoteMessage.getNotification().getBody());
-//            // app is in background, show the notification in notification tray
-//            Intent resultIntent = new Intent(getApplicationContext(), MPD_Fragment.class);
-//            resultIntent.putExtra("message", remoteMessage.getNotification().getBody());
-//
-//            NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
-//
-//            inboxStyle.addLine(remoteMessage.getNotification().getBody());
-//
-//            Intent notificationIntent = new Intent(this, MPD_Fragment.class);
-//            PendingIntent pendingIntent = PendingIntent.getActivity(this,
-//                    0, notificationIntent, 0);
-//
-//
-//            createNotificationChannel();
-//            NotificationCompat.Builder notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-//                    .setContentTitle(remoteMessage.getNotification().getTitle())
-//                    .setContentText(remoteMessage.getNotification().getBody())
-//                    .setSmallIcon(R.mipmap.ic_launcher)
-//                    .setContentIntent(pendingIntent);
-//
-//            //NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-//            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-//            notificationManager.notify(Config.NOTIFICATION_ID, notification.build());
-//
-//            Log.d(TAG,"tHE END");
-//            //showNotificationMessage(getApplicationContext(), remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(), remoteMessage.getSentTime(), resultIntent);
-//            // handleNotification(remoteMessage.getNotification().getBody());
-//
-//        }
+         //Check if message contains a notification payload.
+        if (remoteMessage.getNotification() != null) {
+            Log.e(TAG, "Notification Body: " + remoteMessage.getNotification().getBody());
+            // app is in background, show the notification in notification tray
+            Intent resultIntent = new Intent(getApplicationContext(), adminActivity.class);
+            resultIntent.putExtra("message", remoteMessage.getNotification().getBody());
+
+            NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+
+            inboxStyle.addLine(remoteMessage.getNotification().getBody());
+
+            Intent notificationIntent = new Intent(getApplicationContext(), adminActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                    0, notificationIntent, 0);
+
+
+            createNotificationChannel();
+            NotificationCompat.Builder notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
+                    .setContentTitle(remoteMessage.getNotification().getTitle())
+                    .setContentText(remoteMessage.getNotification().getBody())
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentIntent(pendingIntent);
+
+            //NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            notificationManager.notify(Config.NOTIFICATION_ID, notification.build());
+
+            Log.d(TAG,"tHE END");
+            //showNotificationMessage(getApplicationContext(), remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(), remoteMessage.getSentTime(), resultIntent);
+            // handleNotification(remoteMessage.getNotification().getBody());
+
+        }
 
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {

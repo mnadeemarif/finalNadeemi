@@ -28,13 +28,16 @@ import com.csgradqau.finalexamsectionb.data.IResult;
 import com.csgradqau.finalexamsectionb.data.Utils;
 import com.csgradqau.finalexamsectionb.data.VolleyService;
 import com.csgradqau.finalexamsectionb.data.user;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -113,7 +116,7 @@ public class registerActivity extends AppCompatActivity {
                     a.setGender("Female");
 
                 int sm = type.getCheckedRadioButtonId();
-                if (s == R.id.admin)
+                if (sm == R.id.admin)
                     a.setType("admin");
                 else
                     a.setType("employee");
@@ -149,14 +152,34 @@ public class registerActivity extends AppCompatActivity {
 
                 assert u_id != null;
                 myRef.child(u_id).setValue(a);
-                if(a.getType().equals("admin"))
-                    addNewNote(a.getId(),a.getId(),a.getName(),a.getUsername(),a.getPassword(),a.getMarketingSector(),a.getGender(),a.getType(),a.getDoj());
 
-                //long id = db.registerUser(a.getEmail(),a.getPassword(),a.getName(),a.getDob(),a.getGender(),a.getHobbies(),a.getProfile());
                 if (!u_id.equals("") )
                 {
                     Toast.makeText(registerActivity.this, "User Registered !", Toast.LENGTH_LONG).show();
+                    addNewNote(a.getId(),a.getId(),a.getName(),a.getUsername(),a.getPassword(),a.getMarketingSector(),a.getGender(),a.getType(),a.getDoj());
                 }
+
+                if(a.getType().equals("admin"))
+
+                {
+                    FirebaseMessaging.getInstance().subscribeToTopic("admin")
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            private static final String TAG = "";
+
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                String msg = "successful";
+                                if (!task.isSuccessful()) {
+                                    msg = "unsuccessful";
+                                }
+                                Log.d(TAG, msg);
+                                Toast.makeText(registerActivity.this, msg, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                }
+
+                //long id = db.registerUser(a.getEmail(),a.getPassword(),a.getName(),a.getDob(),a.getGender(),a.getHobbies(),a.getProfile());
+
             }
         });
 
