@@ -12,6 +12,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -22,6 +23,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
+import com.csgradqau.finalexamsectionb.data.IResult;
+import com.csgradqau.finalexamsectionb.data.Utils;
+import com.csgradqau.finalexamsectionb.data.VolleyService;
 import com.csgradqau.finalexamsectionb.data.user;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,10 +39,16 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class registerActivity extends AppCompatActivity {
+    private VolleyService mVolleyService;
+    private IResult mResultCallback = null;
 
     Button register;
     EditText name,username,password,dob;
@@ -117,6 +128,7 @@ public class registerActivity extends AppCompatActivity {
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                     byte[] data = baos.toByteArray();
+                    assert u_id != null;
                     UploadTask uploadTask = myStoreRef.child(u_id).putBytes(data);
                     uploadTask.addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -127,7 +139,7 @@ public class registerActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                            // ...
+                            Toast.makeText(registerActivity.this,"Picture uploaded",Toast.LENGTH_LONG);
                         }
                     });
 
@@ -135,9 +147,13 @@ public class registerActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+                assert u_id != null;
                 myRef.child(u_id).setValue(a);
+                if(a.getType().equals("admin"))
+                    addNewNote(a.getId(),a.getId(),a.getName(),a.getUsername(),a.getPassword(),a.getMarketingSector(),a.getGender(),a.getType(),a.getDoj());
+
                 //long id = db.registerUser(a.getEmail(),a.getPassword(),a.getName(),a.getDob(),a.getGender(),a.getHobbies(),a.getProfile());
-                if (!u_id.equals(""))
+                if (!u_id.equals("") )
                 {
                     Toast.makeText(registerActivity.this, "User Registered !", Toast.LENGTH_LONG).show();
                 }
@@ -147,7 +163,8 @@ public class registerActivity extends AppCompatActivity {
         btmLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //getApplicationContext().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,new LoginFragment()).commit();
+               Intent i = new Intent(registerActivity.this,loginActivity.class);
+               startActivity(i);
             }
         });
 
@@ -245,4 +262,78 @@ public class registerActivity extends AppCompatActivity {
         return byteArray;
 
     }
+
+    private void addNewNote(String id,String img,String name,String username,String password,String sector, String gender, String type, String dob) {
+//        Utils.isOnline(registerActivity.this)
+        Toast.makeText(registerActivity.this, "in new note ",Toast.LENGTH_LONG).show();
+        if (true) {
+            //Log.d(TAG,"AddNewNote()");
+            mResultCallback = new IResult() {
+                private static final String TAG = "";
+
+                @Override
+                public void notifySuccess(String requestType, String response) {
+                    Log.d(TAG, "Volley JSON post" + response);
+                    try {
+                        if(requestType.equalsIgnoreCase("add_note")){
+
+                            JSONArray responseArray=new JSONArray(response);
+                            //Log.d(TAG,responseArray.toString());
+                            if (responseArray.length() > 0) {
+                                for (int i = 0; i < responseArray.length(); i++) {
+                                    JSONObject responseObject=responseArray.getJSONObject(i);
+                                    user u = new user();
+                                    u.setId(responseObject.get("id").toString());
+                                    u.setImage(responseObject.get("image").toString());
+                                    u.setUsername(responseObject.get("username").toString());
+                                    u.setName(responseObject.get("username").toString());
+                                    u.setPassword(responseObject.get("password").toString());
+                                    u.setType(responseObject.get("userType").toString());
+                                    u.setGender(responseObject.get("marketsector").toString());
+                                    u.setDoj(responseObject.get("doj").toString());
+                                }
+
+                            } else {
+                                Toast.makeText(registerActivity.this, "No Users Found", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    } catch (Exception je) {
+                        //Log.e(TAG, je.toString());
+                    }
+                }
+
+                @Override
+                public void notifyError(String requestType, VolleyError error) {
+//                    Log.d(TAG, "Volley requester " + requestType);
+//                    Log.d(TAG, "Volley JSON post " + " That didn't work!");
+//                    Log.e(TAG, error.toString());
+                }
+            };
+            //mResultCallback = new MainActivity();
+            mVolleyService = new VolleyService(mResultCallback, registerActivity.this);
+
+            JSONObject sendObj = new JSONObject();
+            try {
+                sendObj.put("ACTION", "add_note");
+                sendObj.put("name",name);
+                sendObj.put("username", username);
+                sendObj.put("password", password);
+                //sendObj.put("id",id);
+                sendObj.put("image",img+" "+name);
+                sendObj.put("usertype", type);
+                sendObj.put("marketsector", sector);
+                sendObj.put("doj", dob);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            mVolleyService.postDataVolley("add_note", Utils.SERVER_HOME_URL, sendObj);
+
+        } else {
+            Toast.makeText(registerActivity.this," Network Error" , Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

@@ -2,7 +2,58 @@ package com.csgradqau.finalexamsectionb.data;
 
 public class user {
 
-    private String id,name,username,doj,password,gender,type,marketingSector;
+    public static final String TABLE_NAME = "User";
+
+    public static final String COLUMN_ID = "id";
+    public static final String COLUMN_IMAGE = "image";
+    public static final String COLUMN_NAME = "name";
+    public static final String COLUMN_USERNAME = "username";
+    public static final String COLUMN_PASSWORD = "password";
+    public static final String COLUMN_SECTOR = "sector";
+    public static final String COLUMN_GENDER = "gender";
+    public static final String COLUMN_DOJ = "doj";
+    public static final String COLUMN_type = "type";
+    public static final String COLUMN_TIMESTAMP = "timestamp";
+
+
+    public String id;
+    private String name,username,doj,password,gender,type,marketingSector,image;
+
+
+    // Create table SQL query
+    public static final String CREATE_TABLE =
+            "CREATE TABLE " + TABLE_NAME + "("
+                    + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + COLUMN_IMAGE + " TEXT,"
+                    + COLUMN_NAME + " TEXT,"
+                    + COLUMN_USERNAME + " TEXT,"
+                    + COLUMN_PASSWORD + " TEXT,"
+                    + COLUMN_SECTOR + " TEXT,"
+                    + COLUMN_GENDER + " TEXT,"
+                    + COLUMN_type + " TEXT,"
+                    + COLUMN_DOJ + " TEXT,"
+                    + COLUMN_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP"
+                    + ")";
+
+    public user(String id, String name, String username, String doj, String password, String gender, String type, String marketingSector, String image) {
+        this.id = id;
+        this.name = name;
+        this.username = username;
+        this.doj = doj;
+        this.password = password;
+        this.gender = gender;
+        this.type = type;
+        this.marketingSector = marketingSector;
+        this.image = image;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public user() {
     }

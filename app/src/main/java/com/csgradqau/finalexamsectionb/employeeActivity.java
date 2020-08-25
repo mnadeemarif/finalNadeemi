@@ -67,7 +67,7 @@ public class employeeActivity extends AppCompatActivity {
     Uri imageUri;
     Bundle data;
     private RequestQueue mRequestQue;
-    private  String URL = "https://fcm.googleapis.com/fcm/send";
+   // private  String URL = "https://fcm.googleapis.com/fcm/send";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

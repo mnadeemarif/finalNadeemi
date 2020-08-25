@@ -18,7 +18,7 @@ public class Utils {
     /*
      * Following URL are used for Localhost and IP changes
      */
-    public static String SERVER_HOME_URL="http://10.0.2.2:8080/mad_notes_app/index.php";
+    public static String SERVER_HOME_URL="http://192.168.43.89/mad_notes_app/index.php";
 
 
 

@@ -2,7 +2,8 @@ package com.csgradqau.finalexamsectionb.data;
 
 public class product {
 
-    private String id,disc,type,quantity,location,price;
+    private String id,disc,type,quantity,location,price,addedby;
+    public static String ADDED_BY;
     public product(){}
 
     public product(String id, String disc,String type, String quantity, String location, String price) {
