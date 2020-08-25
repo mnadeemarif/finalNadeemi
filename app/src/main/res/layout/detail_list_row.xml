@@ -2,44 +2,44 @@
 <RelativeLayout    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
 
     <ImageView
-        android:id="@+id/picR"
+        android:id="@+id/selfie"
         android:layout_width="100sp"
         android:layout_height="100sp"
         />
 
     <TextView
-        android:id="@+id/nameR"
+        android:id="@+id/type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_toRightOf="@id/picR"
-        android:textSize="28sp"
+        android:layout_toRightOf="@id/selfie"
+        android:textSize="24sp"
         android:textColor="#232F34"/>
 
     <TextView
-        android:id="@+id/emailR"
+        android:id="@+id/quantity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/nameR"
+        android:layout_below="@id/type"
         android:layout_marginLeft="0dp"
-        android:layout_toRightOf="@id/picR"
+        android:layout_toRightOf="@id/selfie"
         android:textColor="#344955"
-        android:textSize="22sp" />
+        android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/dobR"
+        android:id="@+id/price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/emailR"
+        android:layout_below="@id/quantity"
         android:layout_marginLeft="0dp"
         android:layout_marginBottom="3dp"
-        android:layout_toRightOf="@id/picR"
+        android:layout_toRightOf="@id/selfie"
         android:textColor="#344955"
-        android:textSize="18sp" />
+        android:textSize="24sp" />
 
 
 </RelativeLayout>
